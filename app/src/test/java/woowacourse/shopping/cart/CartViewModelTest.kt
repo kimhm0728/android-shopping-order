@@ -46,7 +46,7 @@ class CartViewModelTest {
         viewModel.deleteCartItem(cartItems.first().productId)
 
         // then
-        assertThat(viewModel.productUiModels.getOrAwaitValue()).hasSize(0)
+        assertThat(viewModel.cartUiState.getOrAwaitValue()).hasSize(0)
     }
 
     @Test
@@ -61,7 +61,7 @@ class CartViewModelTest {
         viewModel = CartViewModel(productRepository, cartRepository)
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue()
+        val actual = viewModel.cartUiState.getOrAwaitValue()
         assertThat(actual).hasSize(5)
         assertThat(actual).isEqualTo(convertProductUiModel(cartItems, products).take(5))
     }
@@ -78,7 +78,7 @@ class CartViewModelTest {
         viewModel = CartViewModel(productRepository, cartRepository)
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue()
+        val actual = viewModel.cartUiState.getOrAwaitValue()
         assertThat(actual).hasSize(3)
         assertThat(actual).isEqualTo(convertProductUiModel(cartItems, products).take(3))
     }
@@ -110,7 +110,7 @@ class CartViewModelTest {
         viewModel = CartViewModel(productRepository, cartRepository)
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue()
+        val actual = viewModel.cartUiState.getOrAwaitValue()
         assertThat(actual).hasSize(5)
         assertThat(actual).isEqualTo(convertProductUiModel(cartItems, products).take(5))
     }
@@ -190,7 +190,7 @@ class CartViewModelTest {
         viewModel.moveNextPage()
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue()
+        val actual = viewModel.cartUiState.getOrAwaitValue()
         assertThat(actual).hasSize(1)
         assertThat(actual).isEqualTo(convertProductUiModel(cartItems, products).slice(5..5))
     }
@@ -209,7 +209,7 @@ class CartViewModelTest {
         viewModel.movePreviousPage()
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue()
+        val actual = viewModel.cartUiState.getOrAwaitValue()
         assertThat(actual).hasSize(5)
         assertThat(actual).isEqualTo(convertProductUiModel(cartItems, products).take(5))
     }
@@ -224,7 +224,7 @@ class CartViewModelTest {
         viewModel.moveNextPage()
 
         // when
-        val lastOneCartItem = viewModel.productUiModels.getOrAwaitValue().first()
+        val lastOneCartItem = viewModel.cartUiState.getOrAwaitValue().first()
         viewModel.deleteCartItem(lastOneCartItem.productId)
 
         // then
@@ -241,7 +241,7 @@ class CartViewModelTest {
         viewModel = CartViewModel(productRepository, cartRepository)
 
         // when
-        val cartItem = viewModel.productUiModels.getOrAwaitValue().first()
+        val cartItem = viewModel.cartUiState.getOrAwaitValue().first()
         viewModel.deleteCartItem(cartItem.productId)
 
         // then
@@ -262,7 +262,7 @@ class CartViewModelTest {
         viewModel.increaseQuantity(0L)
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue().first()
+        val actual = viewModel.cartUiState.getOrAwaitValue().first()
         assertThat(actual.quantity).isEqualTo(Quantity(3))
     }
 
@@ -279,7 +279,7 @@ class CartViewModelTest {
         viewModel.decreaseQuantity(0L)
 
         // then
-        val actual = viewModel.productUiModels.getOrAwaitValue().first()
+        val actual = viewModel.cartUiState.getOrAwaitValue().first()
         assertThat(actual.quantity).isEqualTo(Quantity(2))
     }
 
